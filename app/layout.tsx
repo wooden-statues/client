@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
     title: "WoodenStatues",
@@ -20,10 +20,11 @@ export default function RootLayout({
             <body>
                 <header>
                     <Navbar />
-                    <Hero />
                 </header>
 
                 {children}
+
+                <Footer />
             </body>
         </html>
     );
