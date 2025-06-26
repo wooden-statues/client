@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Footer = () => {
     return (
-        <footer className="bg-dark-green px-[18%] py-[9.72vw] flex flex-col gap-10">
+        <footer className="bg-dark-green px-[18%] py-[9.72vw] flex flex-col gap-10 relative z-10">
             <h3 className="text-white font-iowan font-bold italic text-[4.44vw]">Връзка с мен</h3>
 
             <section className="flex w-full justify-between">
