@@ -5,6 +5,7 @@
   --foreground: #171717;
 }
 
+<<<<<<< Updated upstream
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -24,3 +25,18 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+=======
+@theme {
+    --color-dark-green: #162703;
+    --color-light: #FAE0CD;
+    --color-brown: #5E3820;
+    --font-lemonada: "Lemonada";
+    --font-italianno: "Italianno";
+    --font-iowan: "Iowan Old Style";
+    --font-inter: "Inter";
+}
+
+.clip-triangle {
+    clip-path: polygon(-250px 0, 115% 0, 50% 60%);
+}
+>>>>>>> Stashed changes
