@@ -1,23 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@300..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Italianno&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 @import "tailwindcss";
-
-@layer base {
-    @font-face {
-        font-family: 'Iowan Old Style';
-        font-style: normal;
-        font-weight: normal;
-        src: local('Bitstream Iowan Old Style BT'), url('/fonts/iowan-old-style/bitstream-iowan-old-style-bt-586c36a8d7712.woff') format('woff');
-    }
-}
 
 @theme {
     --color-dark-green: #162703;
     --color-light: #FAE0CD;
+    --color-brown: #5E3820;
     --font-lemonada: "Lemonada";
     --font-italianno: "Italianno";
     --font-iowan: "Iowan Old Style";
     --font-inter: "Inter";
+}
+
+.clip-triangle {
+    clip-path: polygon(-250px 0, 115% 0, 50% 60%);
 }
