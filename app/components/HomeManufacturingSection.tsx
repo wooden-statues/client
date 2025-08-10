@@ -6,13 +6,13 @@ import HomeProducts from "./HomeProducts";
 const HomeManufacturingSection = () => {
     const [images, setImages] = useState<any[]>([
         {
-            imageUrl: "/product-image-placeholder.png"
+            coverImage: "/product-image-placeholder.png"
         },
         {
-            imageUrl: "/product-image-placeholder.png"
+            coverImage: "/product-image-placeholder.png"
         },
         {
-            imageUrl: "/product-image-placeholder.png"
+            coverImage: "/product-image-placeholder.png"
         }
     ]);
 

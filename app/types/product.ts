@@ -1,5 +1,7 @@
 export type Product = {
     title: string;
-    imageUrl: string;
+    coverImage: string;
+    images?: string[];
     description?: string;
+    id?: string;
 };

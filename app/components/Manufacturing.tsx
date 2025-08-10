@@ -7,20 +7,20 @@ import SecondaryHomeSection from "./SecondaryHomeSection";
 const Manufacturing = () => {
     const [images] = useState<any[]>([
         {
-            imageUrl: "/manufacturing-image-placeholder.png"
+            coverImage: "/manufacturing-image-placeholder.png"
         },
         {
-            imageUrl: "/manufacturing-image-placeholder.png"
+            coverImage: "/manufacturing-image-placeholder.png"
         },
         {
-            imageUrl: "/manufacturing-image-placeholder.png"
+            coverImage: "/manufacturing-image-placeholder.png"
         }
     ]);
 
     return (
         <section className="flex flex-col items-center">
             <SecondaryHomeSection
-                imageUrl="/artist-image-placeholder.png"
+                coverImage="/artist-image-placeholder.png"
                 title="За изработката"
                 description="Георги Георгиев е талантлив майстор, който се занимава с ръчна изработка на уникални дървени статуетки."
                 isReversed={true}
