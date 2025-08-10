@@ -8,15 +8,15 @@ const Liked = () => {
     const [products] = useState<Product[]>([
         {
             title: "Име на продукта",
-            imageUrl: "/product-image-placeholder.png"
+            coverImage: "/product-image-placeholder.png"
         },
         {
             title: "Име на продукта",
-            imageUrl: "/product-image-placeholder.png"
+            coverImage: "/product-image-placeholder.png"
         },
         {
             title: "Име на продукта",
-            imageUrl: "/product-image-placeholder.png"
+            coverImage: "/product-image-placeholder.png"
         }
     ]);
 
