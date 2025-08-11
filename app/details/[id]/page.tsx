@@ -80,7 +80,7 @@ export default function Details() {
                     </section>
 
                     <section className='flex flex-col items-start gap-[2vw]'>
-                        <h1 className='font-iowan font-bold text-[4.58vw] drop-shadow-[0_8px_4px_rgba(0,0,0,0.25)]'>{product.title}</h1>
+                        <h1 className='font-iowan font-bold text-[4.58vw] drop-shadow-[0_8px_4px_rgba(0,0,0,0.25)] max-xs:text-[7vw]'>{product.title}</h1>
                         <p className='font-inter text-[1.53vw] max-w-[35ch]'>{product.description}</p>
                         <Link href="" className='bg-brown text-white rounded-lg py-1.75 px-8.5'>Направи заявка</Link>
                     </section>

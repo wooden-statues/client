@@ -21,6 +21,8 @@
     --font-italianno: "Italianno";
     --font-iowan: "Iowan Old Style";
     --font-inter: "Inter";
+    --breakpoint-md: 56rem;
+    --breakpoint-xs: 38rem;
 }
 
 .clip-triangle {
