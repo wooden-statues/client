@@ -20,7 +20,7 @@ const Navbar = () => {
                     <li onClick={(e) => { e.stopPropagation(); setIsOpened(false) }}><Link href="/">Начало</Link></li>
                     <li onClick={(e) => { e.stopPropagation(); setIsOpened(false) }}><Link href="/requests">Заявки</Link></li>
                     <li onClick={(e) => { e.stopPropagation(); setIsOpened(false) }}><Link href="/gallery">Галерия</Link></li>
-                    <li onClick={(e) => { e.stopPropagation(); setIsOpened(false) }}><Link href="/contacts">Контакти</Link></li>
+                    <li onClick={(e) => { e.stopPropagation(); setIsOpened(false) }}><a href="#contact">Контакти</a></li>
                 </ul>
             </>
         )
