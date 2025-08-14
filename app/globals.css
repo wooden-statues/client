@@ -22,6 +22,7 @@
     --font-iowan: "Iowan Old Style";
     --font-inter: "Inter";
     --breakpoint-md: 56rem;
+    --breakpoint-s: 48rem;
     --breakpoint-xs: 38rem;
 }
 

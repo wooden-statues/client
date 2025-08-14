@@ -26,9 +26,9 @@ const Navbar = () => {
         )
     }
     return (
-        <nav className="flex justify-between items-center py-9 px-[15vw] bg-dark-green max-md:px-[7vw] max-xs:py-6">
+        <nav className="flex justify-between items-center py-9 px-[15vw] bg-dark-green max-md:px-[7vw] max-s:py-6">
             <Link href="/">
-                <Image src="/logo.svg" alt="logo" width={1} height={0} className="w-[8.06vw] min-w-[80px]" />
+                <Image src="/logo.svg" alt="logo" width={1} height={0} className="w-[8.06vw] min-w-[80px] max-xs:min-w-[60px]" />
             </Link>
 
             {navLinks("flex gap-15 text-[1.39vw] text-[#F4ECE2] font-[575] max-md:text-[2vw] max-xs:hidden")}
