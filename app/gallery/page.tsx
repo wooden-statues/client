@@ -49,15 +49,17 @@ export default async function GalleryPage() {
             <Link
               key={p.slug}
               href={`/details/${p.slug}`}
-              className="flex flex-col items-center bg-light p-[1.39vw] rounded-[20px] drop-shadow-[0_5px_7px_rgba(0,0,0,0.25)] cursor-pointer max-xs:bg-transparent max-xs:gap-[3vw]"
+              className="flex flex-col items-center bg-light p-[1.39vw] rounded-[20px] drop-shadow-[0_5px_7px_rgba(0,0,0,0.25)] cursor-pointer max-xs:bg-transparent max-xs:gap-[3vw] group animate-fade-up"
             >
-              <Image
-                src={p.coverImage || "/product-image-placeholder.png"}
-                alt={p.title ?? "Статуетка"}
-                width={600}
-                height={750}
-                className="w-[100%] rounded-[20px] object-cover aspect-[4/5]"
-              />
+              <div className="relative w-full aspect-[4/5] rounded-[20px] overflow-hidden">
+                <Image
+                  src={p.coverImage || "/product-image-placeholder.png"}
+                  alt={p.title ?? "Статуетка"}
+                  fill
+                  sizes="(max-width: 38rem) 90vw, (max-width: 56rem) 45vw, 22vw"
+                  className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
+                />
+              </div>
               <p className="font-inter font-medium text-[#0C1203] text-[1.4vw] max-xs:text-[3.2vw]">
                 {p.title}
               </p>

@@ -8,7 +8,7 @@ const Manufacturing = async () => {
   return (
     <section className="flex flex-col items-center">
       <SecondaryHomeSection
-        coverImage="/artist-image-placeholder.png"
+        coverImage="/manufacturing-image-placeholder.png"
         title="За изработката"
         description="Георги Георгиев е талантлив майстор, който се занимава с ръчна изработка на уникални дървени статуетки."
         isReversed={true}

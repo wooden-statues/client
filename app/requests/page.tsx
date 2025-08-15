@@ -34,7 +34,10 @@ export default function Requests() {
       });
 
       const json: unknown = await res.json();
-      const ok = typeof (json as { ok?: boolean }).ok === "boolean" ? (json as { ok?: boolean }).ok : false;
+      const ok =
+        typeof (json as { ok?: boolean }).ok === "boolean"
+          ? (json as { ok?: boolean }).ok
+          : false;
       const errText =
         typeof (json as { error?: string }).error === "string"
           ? (json as { error?: string }).error
@@ -47,7 +50,9 @@ export default function Requests() {
       router.push("/request-success");
     } catch (err: unknown) {
       const msg =
-        err instanceof Error ? err.message : "Възникна грешка при изпращането. Опитайте отново.";
+        err instanceof Error
+          ? err.message
+          : "Възникна грешка при изпращането. Опитайте отново.";
       setErrorMsg(msg);
       setSending(false);
     }
@@ -73,14 +78,14 @@ export default function Requests() {
           src={"/request.png"}
           alt="make a request section image"
           width={716}
-          height={0}
+          height={716}
           className="w-1/2 translate-y-[-8%] absolute z-1 max-xs:hidden"
         />
         <Image
           src={"/gallery-background.png"}
           alt="make a request section image no-background"
           width={716}
-          height={0}
+          height={716}
           className="w-1/2 absolute z-1 hidden bottom-0 left-1/2 -translate-x-1/2 opacity-30 max-xs:block"
         />
 
@@ -88,37 +93,51 @@ export default function Requests() {
           <h1 className="font-iowan font-semibold text-[3.75vw] text-brown drop-shadow-[0_18px_8px_rgba(0,0,0,0.25)] max-xs:text-[8vw] max-xs:text-center max-xs:z-10">
             Направи заявка
           </h1>
-          <form onSubmit={onSubmit} className="flex flex-col items-start gap-[3.06vw] max-xs:gap-[5vw]">
+          <form onSubmit={onSubmit} className="flex flex-col items-start gap-[3.06vw] max-xs:gap-[5vw]" aria-busy={sending} aria-describedby="request-status">
+            <label htmlFor="statue_name" className="sr-only">Име на статуетка</label>
             <input
               className="w-full bg-[#B2886B] text-white font-inter text-[1.2vw] drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)] rounded-lg placeholder:text-[#F4ECE299] py-[1vw] pl-[1.2vw] focus:ring-0 focus:outline-amber-900 max-xs:text-[3vw] max-xs:py-[2.5vw] max-xs:pl-[4vw]"
               type="text"
               name="statue_name"
+              id="statue_name"
               placeholder="Име на статуетка"
               required
               defaultValue={initialStatue}
+              autoComplete="off"
             />
+
+            <label htmlFor="phone" className="sr-only">Телефонен номер</label>
             <input
               className="w-full bg-[#B2886B] text-white font-inter text-[1.2vw] drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)] rounded-lg placeholder:text-[#F4ECE299] py-[1vw] pl-[1.2vw] focus:ring-0 focus:outline-amber-900 max-xs:text-[3vw] max-xs:py-[2.5vw] max-xs:pl-[4vw]"
-              type="text"
+              type="tel"
               name="phone"
+              id="phone"
               placeholder="Телефонен номер"
               required
+              inputMode="tel"
+              autoComplete="tel"
             />
+
+            <label htmlFor="order_details" className="sr-only">Детайли към поръчка</label>
             <textarea
               className="w-full bg-[#B2886B] text-white font-inter text-[1.2vw] drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)] rounded-lg placeholder:text-[#F4ECE299] py-[1vw] pl-[1.2vw] focus:ring-0 focus:outline-amber-900 resize-none max-xs:text-[3vw] max-xs:py-[2.5vw] max-xs:pl-[4vw]"
               rows={3}
               name="order_details"
+              id="order_details"
               placeholder="Детайли към поръчка"
               required
             ></textarea>
+
             <input
-              className="bg-brown text-white text-[1.25vw] rounded-lg py-[1vw] px-9 cursor-pointer max-xs:text-[3.2vw] max-xs:self-stretch max-xs:py-[2vw] z-20 disabled:opacity-60"
+              className="bg-brown text-white text-[1.25vw] rounded-lg py-[1vw] px-9 cursor-pointer max-xs:text-[3.2vw] max-xs:self-stretch max-xs:py-[2vw] z-20 disabled:opacity-60 disabled:cursor-not-allowed transition active:translate-y-[1px]"
               type="submit"
               value={sending ? "Изпращане..." : "Изпрати"}
               disabled={sending}
             />
 
-            {errorMsg && <p className="text-red-800 text-sm pt-1">{errorMsg}</p>}
+            <div id="request-status" aria-live="polite" className="min-h-[1.5rem]">
+              {errorMsg && <p className="text-red-800 text-sm pt-1">{errorMsg}</p>}
+            </div>
           </form>
         </section>
       </main>

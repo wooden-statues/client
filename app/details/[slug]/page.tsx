@@ -20,33 +20,43 @@ export default async function DetailsPage({ params }: { params: { slug: string }
     <>
       <main>
         <section className="grid grid-cols-2 w-4/5 justify-center gap-[5vw] pt-[8.5vw] pb-[5.83vw] relative mx-auto max-xs:grid-cols-1 max-xs:w-full max-xs:pt-0 max-xs:pb-[30vw] max-xs:gap-[7vw]">
-          <Image src="/request-success-statue.png" alt="details background image" width={1000} height={0} className="w-[30%] absolute bottom-[-5.83vw] right-[-6vw] opacity-50 rotate-y-180 max-xs:right-1/2 max-xs:translate-x-1/2 max-xs:translate-y-1/2 max-xs:0 max-xs:w-2/3" />
+          <Image
+            src="/request-success-statue.png"
+            alt="details background image"
+            width={1000}
+            height={1000}
+            className="w-[30%] absolute bottom-[-5.83vw] right-[-6vw] opacity-50 scale-x-[-1] max-xs:right-1/2 max-xs:translate-x-1/2 max-xs:translate-y-1/2 max-xs:w-2/3"
+          />
 
           {/* Изображение + миниатюри */}
           <section className="flex flex-col items-center gap-[1.7vw]">
             <article className="flex items-center justify-between w-[90%] max-xs:w-full">
               <div className="flex items-center justify-center w-full relative">
-                <Image
-                  src={product.images?.[0] || product.coverImage || "/product-image-placeholder.png"}
-                  alt={product.title || "Статуетка"}
-                  width={1000}
-                  height={0}
-                  className="w-[70%] rounded-[10px] object-cover aspect-[2/3] max-xs:w-full max-xs:aspect-[4/5] max-xs:max-h-[120vw] max-xs:rounded-[0]"
-                />
+                <div className="relative w-[70%] aspect-[2/3] rounded-[10px] overflow-hidden max-xs:w-full max-xs:aspect-[4/5] max-xs:max-h-[120vw] max-xs:rounded-[0]">
+                  <Image
+                    src={product.images?.[0] || product.coverImage || "/product-image-placeholder.png"}
+                    alt={product.title || "Статуетка"}
+                    fill
+                    sizes="(max-width: 38rem) 100vw, 35vw"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </article>
 
             {product.images && product.images.length > 1 && (
               <article className="grid grid-cols-3 gap-[2.5vw] max-xs:hidden">
                 {product.images.map((image, index) => (
-                  <Image
-                    key={index}
-                    src={image}
-                    alt={`${product.title || "Статуетка"} ${index + 1}`}
-                    width={1000}
-                    height={0}
-                    className="w-[80%] rounded-[10px] object-cover aspect-[2/3] place-self-center"
-                  />
+                  <div key={index} className="relative w-[80%] aspect-[2/3] rounded-[10px] overflow-hidden place-self-center">
+                    <Image
+                      src={image}
+                      alt={`${product.title || "Статуетка"} ${index + 1}`}
+                      fill
+                      sizes="15vw"
+                      className="object-cover"
+                    />
+                  </div>
                 ))}
               </article>
             )}
@@ -63,7 +73,7 @@ export default async function DetailsPage({ params }: { params: { slug: string }
             />
             <Link
               href={{ pathname: "/requests", query: { item: product.title } }}
-              className="bg-brown text-white rounded-lg py-[0.8vw] px-[4vw] text-[1.3vw] max-xs:text-[2.6vw] max-xs:w-8/9 max-xs:text-center max-xs:py-[2vw] z-10"
+              className="bg-brown text-white rounded-lg py-[0.8vw] px-[4vw] text-[1.3vw] max-xs:text-[2.6vw] max-xs:w-8/9 max-xs:text-center max-xs:py-[2vw] z-10 transition active:translate-y-[1px]"
             >
               Направи заявка
             </Link>

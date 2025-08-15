@@ -4,28 +4,28 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-    title: "WoodenStatues",
-    icons: {
-        icon: "/logo.svg",
-    },
+  title: "WoodenStatues",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-    return (
-        <html lang="en" className="scroll-smooth">
-            <body>
-                <header>
-                    <Navbar />
-                </header>
+  return (
+    <html lang="bg" className="scroll-smooth">
+      <body>
+        <header>
+          <Navbar />
+        </header>
 
-                {children}
+        {children}
 
-                <Footer />
-            </body>
-        </html>
-    );
+        <Footer />
+      </body>
+    </html>
+  );
 }
