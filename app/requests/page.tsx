@@ -32,15 +32,23 @@ export default function Requests() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
 
-      if (!res.ok || !json.ok) {
-        throw new Error(json?.error || "Неуспешно изпращане.");
+      const json: unknown = await res.json();
+      const ok = typeof (json as { ok?: boolean }).ok === "boolean" ? (json as { ok?: boolean }).ok : false;
+      const errText =
+        typeof (json as { error?: string }).error === "string"
+          ? (json as { error?: string }).error
+          : "Неуспешно изпращане.";
+
+      if (!res.ok || !ok) {
+        throw new Error(errText);
       }
 
       router.push("/request-success");
-    } catch (err: any) {
-      setErrorMsg(err?.message || "Възникна грешка при изпращането. Опитайте отново.");
+    } catch (err: unknown) {
+      const msg =
+        err instanceof Error ? err.message : "Възникна грешка при изпращането. Опитайте отново.";
+      setErrorMsg(msg);
       setSending(false);
     }
   }
@@ -61,8 +69,20 @@ export default function Requests() {
   return (
     <>
       <main className="grid grid-cols-2 bg-light relative h-[calc(50vw*0.9)] max-xs:h-[calc(50vw*2.1)] max-xs:grid-cols-1">
-        <Image src={"/request.png"} alt="make a request section image" width={716} height={0} className="w-1/2 translate-y-[-8%] absolute z-1 max-xs:hidden" />
-        <Image src={"/gallery-background.png"} alt="make a request section image no-background" width={716} height={0} className="w-1/2 absolute z-1 hidden bottom-0 left-1/2 -translate-x-1/2 opacity-30 max-xs:block" />
+        <Image
+          src={"/request.png"}
+          alt="make a request section image"
+          width={716}
+          height={0}
+          className="w-1/2 translate-y-[-8%] absolute z-1 max-xs:hidden"
+        />
+        <Image
+          src={"/gallery-background.png"}
+          alt="make a request section image no-background"
+          width={716}
+          height={0}
+          className="w-1/2 absolute z-1 hidden bottom-0 left-1/2 -translate-x-1/2 opacity-30 max-xs:block"
+        />
 
         <section className="flex flex-col gap-[3.06vw] px-[8.33vw] py-[5vw] col-start-2 max-s:py-[3vw] max-s:gap-[2vw] max-xs:col-start-1 max-xs:py-[10vw] max-xs:px-[4vw] max-xs:gap-[4vw]">
           <h1 className="font-iowan font-semibold text-[3.75vw] text-brown drop-shadow-[0_18px_8px_rgba(0,0,0,0.25)] max-xs:text-[8vw] max-xs:text-center max-xs:z-10">
@@ -98,9 +118,7 @@ export default function Requests() {
               disabled={sending}
             />
 
-            {errorMsg && (
-              <p className="text-red-800 text-sm pt-1">{errorMsg}</p>
-            )}
+            {errorMsg && <p className="text-red-800 text-sm pt-1">{errorMsg}</p>}
           </form>
         </section>
       </main>

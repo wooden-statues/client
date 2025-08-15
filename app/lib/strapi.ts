@@ -20,35 +20,63 @@ function absUrl(url?: string | null) {
   return url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
 }
 
+function asRecord(v: unknown): Record<string, unknown> {
+  return typeof v === "object" && v !== null ? (v as Record<string, unknown>) : {};
+}
+
+function getString(v: unknown): string | undefined {
+  return typeof v === "string" ? v : undefined;
+}
+
+function toNumberOrNull(v: unknown): number | null {
+  if (typeof v === "number") return v;
+  if (typeof v === "string" && v.trim() !== "" && !Number.isNaN(Number(v))) {
+    return Number(v);
+  }
+  return null;
+}
+
 /**
  * Handle both Strapi v5 (flat) and v4 (attributes) media structures.
+ * Accepts unknown and safely extracts an absolute URL or empty string.
  */
-function getSingleMediaUrl(media: any): string {
+function getSingleMediaUrl(media: unknown): string {
+  const r = asRecord(media);
+
   // v5: { url: "/uploads/..." }
-  if (media?.url) return absUrl(media.url);
+  const urlV5 = getString(r.url);
+  if (urlV5) return absUrl(urlV5);
 
   // v4: { data: { attributes: { url: "/uploads/..." } } }
-  const v4url = media?.data?.attributes?.url;
-  if (v4url) return absUrl(v4url);
+  const data = r.data;
+  if (data && typeof data === "object" && !Array.isArray(data)) {
+    const attrs = asRecord((data as Record<string, unknown>).attributes);
+    const urlV4 = getString(attrs.url);
+    if (urlV4) return absUrl(urlV4);
+  }
 
   return "";
 }
 
-function getMultiMediaUrls(media: any): string[] {
+function getMultiMediaUrls(media: unknown): string[] {
   if (!media) return [];
 
-  // v5: images: [{ url: ... }, { url: ... }]
+  // v5 array: [{ url }, { url }]
   if (Array.isArray(media)) {
-    return media
-      .map((m) => getSingleMediaUrl(m))
-      .filter((u: string) => !!u);
+    return media.map((m) => getSingleMediaUrl(m)).filter((u): u is string => !!u);
   }
 
-  // v4: images: { data: [{ attributes: { url }}, ...] }
-  if (Array.isArray(media?.data)) {
-    return media.data
-      .map((m: any) => getSingleMediaUrl(m?.attributes ? { url: m.attributes.url } : m))
-      .filter((u: string) => !!u);
+  // v4: { data: [{ attributes: { url }}, ...] }
+  const r = asRecord(media);
+  const data = r.data;
+  if (Array.isArray(data)) {
+    return data
+      .map((m) => {
+        const attrs = asRecord(asRecord(m).attributes);
+        const u = getString(attrs.url);
+        return u ? absUrl(u) : "";
+      })
+      .filter((u): u is string => !!u);
   }
 
   return [];
@@ -57,22 +85,23 @@ function getMultiMediaUrls(media: any): string[] {
 /**
  * Normalize a statue record from either Strapi v5 (flat) or v4 (attributes).
  */
-function normalizeStatue(item: any): Product {
-  // v4 keeps payload in `attributes`, v5 is flat
-  const a = item?.attributes ?? item ?? {};
+function normalizeStatue(item: unknown): Product {
+  const o = asRecord(item);
+  const a = asRecord(o.attributes);
 
-  const title = a?.name ?? "Без име";
-  const slug = a?.slug ?? String(item?.id ?? "");
-  const description = a?.description ?? "";
-  const price = a?.price == null ? null : Number(a.price);
+  const title = getString(a.name) ?? getString(o.name) ?? "Без име";
+  const slug =
+    getString(a.slug) ?? getString(o.slug) ?? (typeof o.id === "number" ? String(o.id) : "");
+  const description = getString(a.description) ?? getString(o.description) ?? "";
+  const price = toNumberOrNull(a.price ?? o.price);
 
   const coverImageUrl =
-    getSingleMediaUrl(a?.cover_image) || "/product-image-placeholder.png";
-  const allImages = getMultiMediaUrls(a?.images);
-  const images = allImages.length ? allImages : (coverImageUrl ? [coverImageUrl] : []);
+    getSingleMediaUrl(a.cover_image ?? o.cover_image) || "/product-image-placeholder.png";
+  const allImages = getMultiMediaUrls(a.images ?? o.images);
+  const images = allImages.length ? allImages : coverImageUrl ? [coverImageUrl] : [];
 
   return {
-    id: item?.id,
+    id: typeof o.id === "number" ? o.id : undefined,
     title,
     slug,
     description,
@@ -90,11 +119,10 @@ export async function fetchStatues(): Promise<Product[]> {
     );
     if (!res.ok) return [];
 
-    const json = await res.json();
-    const list = Array.isArray(json?.data) ? json.data : [];
-    return list
-      .map(normalizeStatue)
-      .filter((p: Product) => !!p.slug);
+    const json: unknown = await res.json();
+    const data = asRecord(json).data;
+    const list = Array.isArray(data) ? data : [];
+    return list.map(normalizeStatue).filter((p): p is Product => !!p.slug);
   } catch {
     return [];
   }
@@ -112,8 +140,9 @@ export async function fetchStatueBySlug(slug: string): Promise<Product | null> {
     });
     if (!res.ok) return null;
 
-    const json = await res.json();
-    const item = json?.data?.[0];
+    const json: unknown = await res.json();
+    const data = asRecord(json).data;
+    const item = Array.isArray(data) ? data[0] : null;
     if (!item) return null;
 
     return normalizeStatue(item);

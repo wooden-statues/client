@@ -26,17 +26,21 @@ const Footer = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
 
-      if (!res.ok || !json.ok) {
-        throw new Error(json?.error || "Неуспешно изпращане.");
+      const json: unknown = await res.json();
+      const ok = typeof (json as { ok?: boolean }).ok === "boolean" ? (json as { ok?: boolean }).ok : false;
+      const errText = typeof (json as { error?: string }).error === "string" ? (json as { error?: string }).error : "Неуспешно изпращане.";
+
+      if (!res.ok || !ok) {
+        throw new Error(errText);
       }
 
       setStatus("success");
       form.reset();
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus("error");
-      setErrorMsg(err?.message || "Възникна грешка при изпращането.");
+      const msg = err instanceof Error ? err.message : "Възникна грешка при изпращането.";
+      setErrorMsg(msg);
     }
   }
 
@@ -87,22 +91,38 @@ const Footer = () => {
           {status === "success" && (
             <p className="text-green-200 text-sm pt-2">Съобщението е изпратено успешно!</p>
           )}
-          {status === "error" && (
-            <p className="text-red-200 text-sm pt-2">{errorMsg}</p>
-          )}
+          {status === "error" && <p className="text-red-200 text-sm pt-2">{errorMsg}</p>}
         </form>
 
         <article className="flex flex-col gap-7 text-[#EEE2D7] max-xs:gap-9">
           <div className="flex items-center gap-2 max-xs:flex-col max-xs:gap-4">
-            <Image src={"/footer-contact-icons/location.svg"} alt="location icon" width={0} height={0} className="w-[40px] max-xs:w-[13vw]" />
+            <Image
+              src={"/footer-contact-icons/location.svg"}
+              alt="location icon"
+              width={0}
+              height={0}
+              className="w-[40px] max-xs:w-[13vw]"
+            />
             <p className="font-inter font-medium text-[1.53vw] max-xs:text-[3vw]">Цар Освободител 13, Разград</p>
           </div>
           <div className="flex items-center gap-2 max-xs:flex-col max-xs:gap-4">
-            <Image src={"/footer-contact-icons/phone.svg"} alt="phone icon" width={0} height={0} className="w-[40px] max-xs:w-[13vw]" />
+            <Image
+              src={"/footer-contact-icons/phone.svg"}
+              alt="phone icon"
+              width={0}
+              height={0}
+              className="w-[40px] max-xs:w-[13vw]"
+            />
             <p className="font-inter font-medium text-[1.53vw] max-xs:text-[3vw]">+359 88 652 1239</p>
           </div>
           <div className="flex items-center gap-2 max-xs:flex-col max-xs:gap-4">
-            <Image src={"/footer-contact-icons/email.svg"} alt="email icon" width={0} height={0} className="w-[40px] max-xs:w-[13vw]" />
+            <Image
+              src={"/footer-contact-icons/email.svg"}
+              alt="email icon"
+              width={0}
+              height={0}
+              className="w-[40px] max-xs:w-[13vw]"
+            />
             <p className="font-inter font-medium text-[1.53vw] max-xs:text-[3vw]">woodenstatues58@gmail.com</p>
           </div>
         </article>

@@ -15,10 +15,34 @@ export default async function GalleryPage() {
           Статуетки
         </h1>
 
-        <Image src="/gallery-background.png" alt="gallery background image" width={1000} height={1000} className="w-[50%] absolute top-[-2%] opacity-10 -z-10 left-[2%] max-xs:hidden" />
-        <Image src="/gallery-background.png" alt="gallery background image mirrored" width={1000} height={1000} className="w-[50%] absolute top-[-2%] opacity-10 -z-10 right-[2%] scale-x-[-1] max-xs:hidden" />
-        <Image src="/request-success-statue.png" alt="gallery background image phone version" width={1000} height={1000} className="w-[12%] absolute top-[2vw] opacity-100 -z-10 left-[15%] hidden max-xs:block" />
-        <Image src="/request-success-statue.png" alt="gallery background image phone version mirrored" width={1000} height={1000} className="w-[12%] absolute top-[2vw] opacity-100 -z-10 right-[15%] scale-x-[-1] hidden max-xs:block" />
+        <Image
+          src="/gallery-background.png"
+          alt="gallery background image"
+          width={1000}
+          height={1000}
+          className="w-[50%] absolute top-[-2%] opacity-10 -z-10 left-[2%] max-xs:hidden"
+        />
+        <Image
+          src="/gallery-background.png"
+          alt="gallery background image mirrored"
+          width={1000}
+          height={1000}
+          className="w-[50%] absolute top-[-2%] opacity-10 -z-10 right-[2%] scale-x-[-1] max-xs:hidden"
+        />
+        <Image
+          src="/request-success-statue.png"
+          alt="gallery background image phone version"
+          width={1000}
+          height={1000}
+          className="w-[12%] absolute top-[2vw] opacity-100 -z-10 left-[15%] hidden max-xs:block"
+        />
+        <Image
+          src="/request-success-statue.png"
+          alt="gallery background image phone version mirrored"
+          width={1000}
+          height={1000}
+          className="w-[12%] absolute top-[2vw] opacity-100 -z-10 right-[15%] scale-x-[-1] hidden max-xs:block"
+        />
 
         <section className="grid grid-cols-3 justify-between w-[70%] gap-[4.5vw] max-xs:grid-cols-1 max-xs:w-full max-xs:gap-[9vw]">
           {statues.map((p) => (
@@ -29,7 +53,7 @@ export default async function GalleryPage() {
             >
               <Image
                 src={p.coverImage || "/product-image-placeholder.png"}
-                alt={p.title}
+                alt={p.title ?? "Статуетка"}
                 width={600}
                 height={750}
                 className="w-[100%] rounded-[20px] object-cover aspect-[4/5]"
