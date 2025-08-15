@@ -1,7 +1,11 @@
+// client/app/types/product.ts
 export type Product = {
-    title: string;
+    title?: string;
     coverImage: string;
     images?: string[];
     description?: string;
-    id?: string;
-};
+    id?: number;
+    slug?: string;
+    price?: number | null;
+  };
+  

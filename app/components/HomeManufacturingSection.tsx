@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import HomeProducts from "./HomeProducts";
+import { Product } from "@/types/product";
 
 const HomeManufacturingSection = () => {
-    const [images, setImages] = useState<any[]>([
+    const [images] = useState<Product[]>([
         {
             coverImage: "/product-image-placeholder.png"
         },
