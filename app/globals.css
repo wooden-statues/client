@@ -26,6 +26,14 @@
     --breakpoint-xs: 38rem;
 }
 
-.clip-triangle {
-    clip-path: polygon(-250px 0, 115% 0, 50% 60%);
+@layer utilities {
+    .clip-triangle {
+        clip-path: polygon(-15vw 0, calc(100% + 15vw) 0, 50% 60%);
+    }
+
+    @media (max-width: 38rem) {
+        .clip-triangle {
+            clip-path: polygon(-15vw 0, calc(100% + 15vw) 0, 50% 50%);
+        }
+    }
 }
