@@ -2,7 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { fetchStatueBySlug, fetchStatues } from "@/lib/strapi";
+import { fetchRandomStatues, fetchStatueBySlug, fetchStatues } from "@/lib/strapi";
+import HomeProducts from "@/components/HomeProducts";
+import DetailsImages from "@/components/DetailsImages";
 
 export async function generateStaticParams() {
   const statues = await fetchStatues();
@@ -14,6 +16,8 @@ export const revalidate = 60;
 export default async function DetailsPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const product = await fetchStatueBySlug(slug);
+  const relatedProducts = await fetchRandomStatues(3);
+
   if (!product) notFound();
 
   return (
@@ -29,38 +33,7 @@ export default async function DetailsPage({ params }: { params: { slug: string }
           />
 
           {/* Изображение + миниатюри */}
-          <section className="flex flex-col items-center gap-[1.7vw]">
-            <article className="flex items-center justify-between w-[90%] max-xs:w-full">
-              <div className="flex items-center justify-center w-full relative">
-                <div className="relative w-[70%] aspect-[2/3] rounded-[10px] overflow-hidden max-xs:w-full max-xs:aspect-[4/5] max-xs:max-h-[120vw] max-xs:rounded-[0]">
-                  <Image
-                    src={product.images?.[0] || product.coverImage || "/product-image-placeholder.png"}
-                    alt={product.title || "Статуетка"}
-                    fill
-                    sizes="(max-width: 38rem) 100vw, 35vw"
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </div>
-            </article>
-
-            {product.images && product.images.length > 1 && (
-              <article className="grid grid-cols-3 gap-[2.5vw] max-xs:hidden">
-                {product.images.map((image, index) => (
-                  <div key={index} className="relative w-[80%] aspect-[2/3] rounded-[10px] overflow-hidden place-self-center">
-                    <Image
-                      src={image}
-                      alt={`${product.title || "Статуетка"} ${index + 1}`}
-                      fill
-                      sizes="15vw"
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </article>
-            )}
-          </section>
+          <DetailsImages images={product.images || []} title={product.title || ""} coverImage={product.coverImage} />
 
           {/* Текстова част */}
           <section className="flex flex-col items-start gap-[2vw] max-xs:items-center max-xs:gap-[6vw]">
@@ -78,6 +51,12 @@ export default async function DetailsPage({ params }: { params: { slug: string }
               Направи заявка
             </Link>
           </section>
+        </section>
+
+        <section className="flex items-center gap-[4.44vw] flex-col bg-light pt-20 w-full relative z-10 max-xs:hidden">
+          <h1 className="italic font-iowan font-semibold text-[4.86vw] text-brown drop-shadow-[0_8px_4px_rgba(0,0,0,0.25)]">Подобни статуетки:</h1>
+
+          <HomeProducts products={relatedProducts} />
         </section>
       </main>
     </>
