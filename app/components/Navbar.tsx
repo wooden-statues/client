@@ -50,7 +50,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex justify-between items-center py-9 px-[15vw] bg-dark-green max-md:px-[7vw] max-s:py-6">
+    <nav className="flex justify-between items-center py-9 px-[15vw] bg-dark-green relative z-10 max-md:px-[7vw] max-s:py-6">
       <Link href="/" aria-label="Wooden Statues – Начало">
         <Image src="/logo.svg" alt="Wooden Statues" width={116} height={41} className="w-[8.06vw] min-w-[80px] max-xs:min-w-[60px]" />
       </Link>
