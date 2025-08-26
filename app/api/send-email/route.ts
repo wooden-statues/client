@@ -2,7 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resendApiKey = process.env.RESEND_API_KEY;
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 const TO = process.env.RESEND_TO;
 const FROM = process.env.RESEND_FROM || "onboarding@resend.dev";
@@ -141,6 +142,13 @@ export async function POST(req: NextRequest) {
     if (!TO) {
       return NextResponse.json(
         { ok: false, error: "RESEND_TO is not configured." },
+        { status: 500 }
+      );
+    }
+
+    if (!resend) {
+      return NextResponse.json(
+        { ok: false, error: "RESEND_API_KEY is not configured." },
         { status: 500 }
       );
     }
