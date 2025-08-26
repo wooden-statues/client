@@ -13,8 +13,12 @@ export async function generateStaticParams() {
 
 export const revalidate = 60;
 
-export default async function DetailsPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function DetailsPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const product = await fetchStatueBySlug(slug);
   const relatedProducts = await fetchRandomStatues(3);
 
