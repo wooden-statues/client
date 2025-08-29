@@ -1,11 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const DetailsImages = ({ images, title, coverImage }: { images: string[], title: string, coverImage: string }) => {
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const imageRef = useRef<HTMLImageElement | null>(null);
+
+    // Build the gallery: ensure cover image is first (if present), then other images
+    const galleryImages = useMemo(() => {
+        const base = Array.isArray(images) ? images : [];
+        const isPlaceholder = coverImage === "/product-image-placeholder.png";
+        const validCover = coverImage && coverImage.trim() !== "" && !isPlaceholder ? coverImage : "";
+        if (!validCover) return base;
+        // If cover already present in images, move it to the front; else prepend
+        const withoutCover = base.filter((img) => img !== validCover);
+        return [validCover, ...withoutCover];
+    }, [images, coverImage]);
+
+    // Keep index in bounds if images change
+    useEffect(() => {
+        if (activeImageIndex >= galleryImages.length) {
+            setActiveImageIndex(0);
+        }
+    }, [galleryImages.length, activeImageIndex]);
 
     //
 
@@ -13,11 +31,11 @@ const DetailsImages = ({ images, title, coverImage }: { images: string[], title:
     let touchendX = 0;
 
     function upIndex() {
-        setActiveImageIndex(prev => prev < images.length - 1 ? prev + 1 : 0);
+        setActiveImageIndex(prev => prev < galleryImages.length - 1 ? prev + 1 : 0);
     }
 
     function downIndex() {
-        setActiveImageIndex(prev => prev > 0 ? prev - 1 : images.length - 1);
+        setActiveImageIndex(prev => prev > 0 ? prev - 1 : galleryImages.length - 1);
     }
 
     function checkDirection() {
@@ -61,7 +79,7 @@ const DetailsImages = ({ images, title, coverImage }: { images: string[], title:
                 <div className="flex items-center justify-center w-full relative">
                     <div className="relative w-[70%] aspect-[2/3] rounded-[10px] overflow-hidden max-xs:w-full max-xs:aspect-[4/5] max-xs:max-h-[120vw] max-xs:rounded-[0]">
                         <Image
-                            src={images?.[activeImageIndex] || coverImage || "/product-image-placeholder.png"}
+                            src={galleryImages?.[activeImageIndex] || "/product-image-placeholder.png"}
                             alt={title || "Статуетка"}
                             fill
                             sizes="(max-width: 38rem) 100vw, 35vw"
@@ -71,7 +89,7 @@ const DetailsImages = ({ images, title, coverImage }: { images: string[], title:
                         />
                     </div>
 
-                    <p className='hidden absolute bg-[#656565B2] font-inter rounded-full text-white text-[2vw] font-light py-[0.5vw] px-[2vw] bottom-[3.5vw] right-[2vw] max-xs:block'>{activeImageIndex + 1}/{images.length}</p>
+                    <p className='hidden absolute bg-[#656565B2] font-inter rounded-full text-white text-[2vw] font-light py-[0.5vw] px-[2vw] bottom-[3.5vw] right-[2vw] max-xs:block'>{activeImageIndex + 1}/{galleryImages.length}</p>
                 </div>
 
                 <svg onClick={upIndex} className='h-[2.64vw] cursor-pointer select-none max-xs:hidden' viewBox="0 0 13 38" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -79,9 +97,9 @@ const DetailsImages = ({ images, title, coverImage }: { images: string[], title:
                 </svg>
             </article>
 
-            {images && images.length > 1 && (
+            {galleryImages && galleryImages.length > 1 && (
                 <article className="grid grid-flow-col auto-cols-fr gap-[2.5vw] w-[80%] max-xs:hidden overflow-x-auto">
-                    {images.map((image, index) => (
+                    {galleryImages.map((image, index) => (
                         <div key={index} className={`relative w-[80%] aspect-[2/3] rounded-[10px] cursor-pointer place-self-center  ${index === activeImageIndex && "border-brown border-2"}`}>
                             <Image
                                 src={image}
