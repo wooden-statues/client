@@ -87,9 +87,14 @@ export async function POST(req: NextRequest) {
   try {
     const payload = await parsePayload(req);
 
-    // Разпознаване на тип форма
-    const isOrder = "statue_name" in payload || "order_details" in payload;
-    const isContact = "email" in payload || "name" in payload;
+    // Разпознаване на тип форма: базирано на непразни стойности, не на ключове
+    const hasOrderHints =
+      isNonEmptyString(payload.statue_name) || isNonEmptyString(payload.order_details);
+    const hasContactHints =
+      isNonEmptyString(payload.email) || isNonEmptyString(payload.name);
+
+    const isOrder = hasOrderHints && !hasContactHints ? true : hasOrderHints;
+    const isContact = !hasOrderHints && hasContactHints ? true : hasContactHints;
 
     // Валидация
     if (isOrder) {
