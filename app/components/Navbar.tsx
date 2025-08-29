@@ -73,7 +73,7 @@ const Navbar = () => {
 
       <section
         id="nav-overlay"
-        className={`fixed bg-white w-full h-screen z-50 top-0 left-0 flex flex-col items-center justify-center transition-opacity duration-300 ease-linear ${isOpened ? "opacity-100 visible" : "opacity-0 invisible"}`}
+        className={`fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center transition-opacity duration-300 ease-linear ${isOpened ? "opacity-100 visible" : "opacity-0 invisible"}`}
         onClick={hideNavOverlay}
         onKeyDown={onKeyDown}
         aria-hidden={!isOpened}

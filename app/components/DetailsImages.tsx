@@ -7,7 +7,7 @@ const DetailsImages = ({ images, title, coverImage }: { images: string[], title:
     const [activeImageIndex, setActiveImageIndex] = useState(0);
     const imageRef = useRef<HTMLImageElement | null>(null);
 
-    console.log(images);
+    //
 
     let touchstartX = 0;
     let touchendX = 0;
@@ -80,7 +80,7 @@ const DetailsImages = ({ images, title, coverImage }: { images: string[], title:
             </article>
 
             {images && images.length > 1 && (
-                <article className={`grid grid-cols-${images.length} gap-[2.5vw] w-[80%] max-xs:hidden`}>
+                <article className="grid grid-flow-col auto-cols-fr gap-[2.5vw] w-[80%] max-xs:hidden overflow-x-auto">
                     {images.map((image, index) => (
                         <div key={index} className={`relative w-[80%] aspect-[2/3] rounded-[10px] cursor-pointer place-self-center  ${index === activeImageIndex && "border-brown border-2"}`}>
                             <Image

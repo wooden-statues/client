@@ -69,7 +69,7 @@ const Footer = () => {
         >
           <label htmlFor="name" className="sr-only">Име</label>
           <input
-            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition max-xs:text-[2vw]"
+            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition max-xs:text-[3.5vw]"
             type="text"
             name="name"
             id="name"
@@ -80,7 +80,7 @@ const Footer = () => {
 
           <label htmlFor="phone" className="sr-only">Телефонен номер</label>
           <input
-            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition max-xs:text-[2vw]"
+            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition max-xs:text-[3.5vw]"
             type="tel"
             name="phone"
             id="phone"
@@ -93,7 +93,7 @@ const Footer = () => {
 
           <label htmlFor="message" className="sr-only">Съобщение</label>
           <textarea
-            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition resize-none max-xs:text-[2vw]"
+            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition resize-none max-xs:text-[3.5vw]"
             rows={3}
             name="message"
             id="message"
@@ -102,7 +102,7 @@ const Footer = () => {
           ></textarea>
 
           <input
-            className="bg-light px-9 py-1.5 cursor-pointer rounded-lg text-[1.25vw] font-inter text-[#0C1203] max-xs:text-[2.5vw] disabled:opacity-60 disabled:cursor-not-allowed transition active:translate-y-[1px]"
+            className="bg-light px-9 py-1.5 cursor-pointer rounded-lg text-[1.25vw] font-inter text-[#0C1203] max-xs:text-[3.5vw] disabled:opacity-60 disabled:cursor-not-allowed transition active:translate-y-[1px]"
             type="submit"
             value={isLoading ? "Изпращане..." : "Изпрати"}
             disabled={isLoading}

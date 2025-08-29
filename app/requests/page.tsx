@@ -121,7 +121,7 @@ function RequestsContent() {
 
             <label htmlFor="order_details" className="sr-only">Детайли към поръчка</label>
             <textarea
-              className="w-full bg-[#B2886B] text-white font-inter text-[1.2vw] drop-shadow-[0_5px_3px_rgба(0,0,0,0.25)] rounded-lg placeholder:text-[#F4ECE299] py-[1vw] pl-[1.2vw] focus:ring-0 focus:outline-amber-900 resize-none max-xs:text-[3vw] max-xs:py-[2.5vw] max-xs:pl-[4vw]"
+              className="w-full bg-[#B2886B] text-white font-inter text-[1.2vw] drop-shadow-[0_5px_3px_rgba(0,0,0,0.25)] rounded-lg placeholder:text-[#F4ECE299] py-[1vw] pl-[1.2vw] focus:ring-0 focus:outline-amber-900 resize-none max-xs:text-[3vw] max-xs:py-[2.5vw] max-xs:pl-[4vw]"
               rows={3}
               name="order_details"
               id="order_details"
