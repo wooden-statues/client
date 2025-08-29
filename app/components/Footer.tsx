@@ -18,6 +18,7 @@ const Footer = () => {
       name: String(formData.get("name") || ""),
       phone: String(formData.get("phone") || ""),
       email: String(formData.get("email") || ""),
+      message: String(formData.get("message") || ""),
     };
 
     try {
@@ -100,6 +101,16 @@ const Footer = () => {
             required
             autoComplete="email"
           />
+
+          <label htmlFor="message" className="sr-only">Съобщение</label>
+          <textarea
+            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition resize-none max-xs:text-[2vw]"
+            rows={3}
+            name="message"
+            id="message"
+            placeholder="Съобщение"
+            required
+          ></textarea>
 
           <input
             className="bg-light px-9 py-1.5 cursor-pointer rounded-lg text-[1.25vw] font-inter text-[#0C1203] max-xs:text-[2.5vw] disabled:opacity-60 disabled:cursor-not-allowed transition active:translate-y-[1px]"

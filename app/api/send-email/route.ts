@@ -18,6 +18,7 @@ type ContactPayload = {
   name: string;
   phone: string;
   email: string;
+  message?: string;
 };
 
 type Payload = Partial<OrderPayload & ContactPayload>;
@@ -47,6 +48,7 @@ async function parsePayload(req: NextRequest): Promise<Payload> {
       name: toOptionalString(o.name),
       phone: toOptionalString(o.phone),
       email: toOptionalString(o.email),
+      message: toOptionalString(o.message),
       statue_name: toOptionalString(o.statue_name),
       order_details: toOptionalString(o.order_details),
     };
@@ -66,6 +68,7 @@ async function parsePayload(req: NextRequest): Promise<Payload> {
       name: get("name"),
       phone: get("phone"),
       email: get("email"),
+      message: get("message"),
       statue_name: get("statue_name"),
       order_details: get("order_details"),
     };
@@ -78,6 +81,7 @@ async function parsePayload(req: NextRequest): Promise<Payload> {
     name: toOptionalString(o.name),
     phone: toOptionalString(o.phone),
     email: toOptionalString(o.email),
+    message: toOptionalString(o.message),
     statue_name: toOptionalString(o.statue_name),
     order_details: toOptionalString(o.order_details),
   };
@@ -125,22 +129,24 @@ export async function POST(req: NextRequest) {
       ? `Нова заявка: ${payload.statue_name ?? "Статуетка"}`
       : `Запитване от ${payload.name ?? "посетител"} през сайта`;
 
-    const html = isOrder
-      ? `
+  const html = isOrder
+    ? `
         <div>
           <h2>Нова заявка от сайта</h2>
           <p><strong>Статуетка:</strong> ${escapeHtml(payload.statue_name ?? "")}</p>
           <p><strong>Телефон:</strong> ${escapeHtml(payload.phone ?? "")}</p>
+          ${isNonEmptyString(payload.email) ? `<p><strong>Имейл:</strong> ${escapeHtml(payload.email ?? "")}</p>` : ""}
           <p><strong>Детайли:</strong></p>
           <p>${escapeHtml(payload.order_details ?? "").replace(/\n/g, "<br/>")}</p>
         </div>
       `
-      : `
+    : `
         <div>
           <h2>Ново запитване от контактната форма</h2>
           <p><strong>Име:</strong> ${escapeHtml(payload.name ?? "")}</p>
           <p><strong>Телефон:</strong> ${escapeHtml(payload.phone ?? "")}</p>
           <p><strong>Имейл:</strong> ${escapeHtml(payload.email ?? "")}</p>
+          ${isNonEmptyString(payload.message) ? `<p><strong>Съобщение:</strong></p><p>${escapeHtml(payload.message ?? "").replace(/\n/g, "<br/>")}</p>` : ""}
         </div>
       `;
 
