@@ -17,7 +17,7 @@ type OrderPayload = {
 type ContactPayload = {
   name: string;
   phone: string;
-  email: string;
+  email?: string;
   message?: string;
 };
 
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     const hasOrderHints =
       isNonEmptyString(payload.statue_name) || isNonEmptyString(payload.order_details);
     const hasContactHints =
-      isNonEmptyString(payload.email) || isNonEmptyString(payload.name);
+      isNonEmptyString(payload.name) || isNonEmptyString(payload.phone) || isNonEmptyString(payload.message);
 
     const isOrder = hasOrderHints && !hasContactHints ? true : hasOrderHints;
     const isContact = !hasOrderHints && hasContactHints ? true : hasContactHints;
@@ -115,8 +115,7 @@ export async function POST(req: NextRequest) {
     } else if (isContact) {
       if (
         !isNonEmptyString(payload.name) ||
-        !isNonEmptyString(payload.phone) ||
-        !isNonEmptyString(payload.email)
+        !isNonEmptyString(payload.phone)
       ) {
         return NextResponse.json(
           { ok: false, error: "Липсват задължителни полета." },
@@ -135,7 +134,6 @@ export async function POST(req: NextRequest) {
           <h2>Нова заявка от сайта</h2>
           <p><strong>Статуетка:</strong> ${escapeHtml(payload.statue_name ?? "")}</p>
           <p><strong>Телефон:</strong> ${escapeHtml(payload.phone ?? "")}</p>
-          ${isNonEmptyString(payload.email) ? `<p><strong>Имейл:</strong> ${escapeHtml(payload.email ?? "")}</p>` : ""}
           <p><strong>Детайли:</strong></p>
           <p>${escapeHtml(payload.order_details ?? "").replace(/\n/g, "<br/>")}</p>
         </div>
@@ -145,7 +143,6 @@ export async function POST(req: NextRequest) {
           <h2>Ново запитване от контактната форма</h2>
           <p><strong>Име:</strong> ${escapeHtml(payload.name ?? "")}</p>
           <p><strong>Телефон:</strong> ${escapeHtml(payload.phone ?? "")}</p>
-          <p><strong>Имейл:</strong> ${escapeHtml(payload.email ?? "")}</p>
           ${isNonEmptyString(payload.message) ? `<p><strong>Съобщение:</strong></p><p>${escapeHtml(payload.message ?? "").replace(/\n/g, "<br/>")}</p>` : ""}
         </div>
       `;

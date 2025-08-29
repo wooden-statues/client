@@ -23,7 +23,6 @@ function RequestsContent() {
     const payload = {
       statue_name: String(formData.get("statue_name") || ""),
       phone: String(formData.get("phone") || ""),
-      email: String(formData.get("email") || ""),
       order_details: String(formData.get("order_details") || ""),
     };
 
@@ -119,15 +118,6 @@ function RequestsContent() {
               autoComplete="tel"
             />
 
-            <label htmlFor="email" className="sr-only">Имейл</label>
-            <input
-              className="w-full bg-[#B2886B] text-white font-inter text-[1.2vw] drop-shadow-[0_5px_3px_rgба(0,0,0,0.25)] rounded-lg placeholder:text-[#F4ECE299] py-[1vw] pl-[1.2vw] focus:ring-0 focus:outline-amber-900 max-xs:text-[3vw] max-xs:py-[2.5vw] max-xs:pl-[4vw]"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Имейл (по желание)"
-              autoComplete="email"
-            />
 
             <label htmlFor="order_details" className="sr-only">Детайли към поръчка</label>
             <textarea

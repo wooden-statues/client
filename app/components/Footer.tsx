@@ -17,7 +17,6 @@ const Footer = () => {
     const payload = {
       name: String(formData.get("name") || ""),
       phone: String(formData.get("phone") || ""),
-      email: String(formData.get("email") || ""),
       message: String(formData.get("message") || ""),
     };
 
@@ -91,16 +90,6 @@ const Footer = () => {
             autoComplete="tel"
           />
 
-          <label htmlFor="email" className="sr-only">Имейл</label>
-          <input
-            className="text-white text-[1.2vw] placeholder-[#BBBBBB] border-b-2 border-b-white w-full pb-[5px] focus:border-b-light focus:ring-0 focus:outline-none transition max-xs:text-[2vw]"
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Имейл"
-            required
-            autoComplete="email"
-          />
 
           <label htmlFor="message" className="sr-only">Съобщение</label>
           <textarea
