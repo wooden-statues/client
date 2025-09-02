@@ -8,9 +8,9 @@ const Artist = async () => {
   return (
     <section className="flex flex-col items-center">
       <SecondaryHomeSection
-        coverImage="/artist-image-placeholder.png"
+        coverImage="/ivan.jpg"
         title="За артиста"
-        description="Георги Георгиев е талантлив майстор, който се занимава с ръчна изработка на уникални дървени статуетки."
+        description="Аз съм Иван Георгиев Петков и изработвам уникални дървени статуетки с височина от 20 до 80 сантиметра, подходящи както за стилно интериорно допълнение, така и за изискан подарък."
         isReversed={false}
       />
 
