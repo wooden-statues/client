@@ -60,7 +60,11 @@ export default async function GalleryPage() {
                   className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03] motion-reduce:transition-none"
                 />
               </div>
-              <p className="font-inter font-medium text-[#0C1203] text-[1.4vw] max-xs:text-[3.2vw]">
+              <p
+                className="font-inter font-semibold text-[#0C1203] text-[clamp(1rem,4.8vw,1.25rem)] leading-snug tracking-tight text-center line-clamp-2 max-xs:px-1"
+                aria-label={p.title}
+                title={p.title}
+              >
                 {p.title}
               </p>
             </Link>

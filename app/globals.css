@@ -58,4 +58,12 @@
         outline: 2px solid var(--color-brown);
         outline-offset: 3px;
     }
+
+    /* Текст: ограничение до 2 реда за заглавия в карти */
+    .line-clamp-2 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
 }

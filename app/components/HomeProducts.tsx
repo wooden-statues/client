@@ -23,7 +23,11 @@ const HomeProducts = ({ products }: { products: Array<Product> }) => {
               />
             </div>
             {product.title && (
-              <p className="mt-3 font-inter font-medium text-[1.35vw] text-[#0C1203] max-xs:text-[3vw]">
+              <p
+                className="mt-3 font-inter font-semibold text-[clamp(1rem,4.6vw,1.25rem)] leading-snug tracking-tight text-[#0C1203] text-center line-clamp-2 max-xs:px-1"
+                aria-label={product.title}
+                title={product.title}
+              >
                 {product.title}
               </p>
             )}
